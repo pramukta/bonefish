@@ -61,7 +61,8 @@ public:
             wamp_unregister_message* unregister_message);
     void process_yield_message(const wamp_session_id& session_id,
             wamp_yield_message* yield_message);
-
+    /// Asynchronous event loop for executing completion handlers.
+    boost::asio::io_service& m_io_service;
 private:
     void send_error(const std::unique_ptr<wamp_transport>& transport,
             const wamp_message_type request_type, const wamp_request_id& request_id,
@@ -71,9 +72,6 @@ private:
             const boost::system::error_code& error);
 
 private:
-    /// Asynchronous event loop for executing completion handlers.
-    boost::asio::io_service& m_io_service;
-
     /// Generates request ids for all invocation requests that are processed.
     wamp_request_id_generator m_request_id_generator;
 

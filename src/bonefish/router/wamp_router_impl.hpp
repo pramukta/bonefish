@@ -48,6 +48,7 @@ public:
     ~wamp_router_impl();
 
     const std::string& get_realm() const;
+    boost::asio::io_service& get_io_service() const;
     const std::shared_ptr<wamp_session_id_generator>& get_session_id_generator() const;
 
     bool has_session(const wamp_session_id& session_id);
@@ -75,11 +76,11 @@ public:
             wamp_unsubscribe_message* unsubscribe_message);
     void process_yield_message(const wamp_session_id& session_id,
             wamp_yield_message* yield_message);
+    wamp_dealer m_dealer;
 
 private:
     std::string m_realm;
     wamp_broker m_broker;
-    wamp_dealer m_dealer;
     wamp_welcome_details m_welcome_details;
     std::shared_ptr<wamp_session_id_generator> m_session_id_generator;
     std::unordered_map<wamp_session_id, std::shared_ptr<wamp_session>> m_sessions;

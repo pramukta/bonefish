@@ -19,6 +19,7 @@
 
 #include <bonefish/router/wamp_router.hpp>
 
+#include <boost/asio.hpp>
 #include <unordered_map>
 
 namespace bonefish {
@@ -55,7 +56,15 @@ inline bool wamp_routers::add_router(const std::shared_ptr<wamp_router>& router)
 inline std::shared_ptr<wamp_router> wamp_routers::get_router(const std::string& realm)
 {
     auto itr = m_routers.find(realm);
-    return itr != m_routers.end() ? itr->second : nullptr;
+    auto ref_itr = m_routers.cbegin();
+    if(itr == m_routers.end()) {
+      boost::asio::io_service &io_service = (ref_itr->second)->get_io_service();
+      std::shared_ptr<wamp_router> router = std::make_shared<wamp_router>(io_service, realm);
+      add_router(router);
+      return router;
+    } else {
+      return itr->second;
+    }
 }
 
 inline void wamp_routers::remove_router(const std::string& realm)

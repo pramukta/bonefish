@@ -42,9 +42,9 @@
 namespace bonefish {
 
 wamp_router_impl::wamp_router_impl(boost::asio::io_service& io_service, const std::string& realm)
-    : m_realm(realm)
+    : m_dealer(io_service)
+    , m_realm(realm)
     , m_broker(realm)
-    , m_dealer(io_service)
     , m_welcome_details()
     , m_session_id_generator(wamp_session_id_factory::create(realm))
     , m_sessions()
@@ -73,6 +73,11 @@ const std::string& wamp_router_impl::get_realm() const
     return m_realm;
 }
 
+boost::asio::io_service& wamp_router_impl::get_io_service() const
+{
+    return m_dealer.m_io_service;
+}
+  
 const std::shared_ptr<wamp_session_id_generator>& wamp_router_impl::get_session_id_generator() const
 {
     return m_session_id_generator;
