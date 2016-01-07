@@ -43,14 +43,14 @@ private:
 
 inline wamp_routers::wamp_routers()
     : m_routers()
-    , m_dynamic(False)
+    , m_dynamic(false)
 {
 }
 
 inline wamp_routers::wamp_routers(boost::asio::io_service& io_service)
     : m_routers()
     , m_io_service(&io_service)
-    , m_dynamic(True)
+    , m_dynamic(true)
 {
 }
 
