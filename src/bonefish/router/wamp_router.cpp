@@ -51,11 +51,6 @@ const std::string& wamp_router::get_realm() const
 {
     return m_impl->get_realm();
 }
-
-boost::asio::io_service& wamp_router::get_io_service() const
-{
-    return m_impl->get_io_service();
-}
   
 const std::shared_ptr<wamp_session_id_generator>& wamp_router::get_session_id_generator() const
 {
@@ -66,6 +61,11 @@ const std::shared_ptr<wamp_session_id_generator>& wamp_router::get_session_id_ge
 bool wamp_router::has_session(const wamp_session_id& session_id)
 {
     return m_impl->has_session(session_id);
+}
+
+bool wamp_router::has_sessions()
+{
+    return m_impl->has_sessions();
 }
 
 bool wamp_router::attach_session(const std::shared_ptr<wamp_session>& session)

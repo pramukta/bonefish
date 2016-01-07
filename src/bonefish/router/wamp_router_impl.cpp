@@ -72,11 +72,6 @@ const std::string& wamp_router_impl::get_realm() const
 {
     return m_realm;
 }
-
-boost::asio::io_service& wamp_router_impl::get_io_service() const
-{
-    return m_dealer.m_io_service;
-}
   
 const std::shared_ptr<wamp_session_id_generator>& wamp_router_impl::get_session_id_generator() const
 {
@@ -86,6 +81,11 @@ const std::shared_ptr<wamp_session_id_generator>& wamp_router_impl::get_session_
 bool wamp_router_impl::has_session(const wamp_session_id& session_id)
 {
     return m_sessions.find(session_id) != m_sessions.end();
+}
+
+bool wamp_router_impl::has_sessions()
+{
+    return !m_sessions.empty()
 }
 
 void wamp_router_impl::close_session(const wamp_session_id& session_id, const std::string& reason)

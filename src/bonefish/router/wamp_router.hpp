@@ -48,10 +48,10 @@ public:
     ~wamp_router();
 
     const std::string& get_realm() const;
-    boost::asio::io_service& get_io_service() const;
     const std::shared_ptr<wamp_session_id_generator>& get_session_id_generator() const;
 
     bool has_session(const wamp_session_id& session_id);
+    bool has_sessions();
     bool attach_session(const std::shared_ptr<wamp_session>& session);
     void close_session(const wamp_session_id& session_id, const std::string& reason);
     bool detach_session(const wamp_session_id& session_id);
