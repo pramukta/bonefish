@@ -85,7 +85,7 @@ bool wamp_router_impl::has_session(const wamp_session_id& session_id)
 
 bool wamp_router_impl::has_sessions()
 {
-    return !m_sessions.empty()
+    return !m_sessions.empty();
 }
 
 void wamp_router_impl::close_session(const wamp_session_id& session_id, const std::string& reason)
