@@ -34,7 +34,8 @@ public:
     bool add_router(const std::shared_ptr<wamp_router>& router);
     std::shared_ptr<wamp_router> get_router(const std::string& realm);
     void remove_router(const std::string& realm);
-
+    bool is_dynamic();
+  
 private:
     std::unordered_map<std::string, std::shared_ptr<wamp_router>> m_routers;
     boost::asio::io_service* m_io_service;
@@ -85,6 +86,11 @@ inline void wamp_routers::remove_router(const std::string& realm)
     m_routers.erase(realm);
 }
 
+inline bool wamp_routers::is_dynamic()
+{
+    return m_dynamic;
+}
+  
 } // namespace bonefish
 
 #endif // BONEFISH_WAMP_ROUTERS_HPP
