@@ -151,6 +151,9 @@ void websocket_server_impl::on_close(websocketpp::connection_hdl handle)
                 m_routers->get_router(connection->get_realm());
         if (router) {
             router->detach_session(connection->get_session_id());
+            if (!router->has_sessions() && m_routers->is_dynamic()) {
+                m_routers->remove_router(router->get_realm())
+            }
         }
     }
 }
@@ -165,6 +168,9 @@ void websocket_server_impl::on_fail(websocketpp::connection_hdl handle)
                 m_routers->get_router(connection->get_realm());
         if (router) {
             router->detach_session(connection->get_session_id());
+            if (!router->has_sessions() && m_routers->is_dynamic()) {
+                m_routers->remove_router(router->get_realm())
+            }
         }
     }
 }
