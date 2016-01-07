@@ -57,7 +57,6 @@ const std::shared_ptr<wamp_session_id_generator>& wamp_router::get_session_id_ge
     return m_impl->get_session_id_generator();
 }
 
-
 bool wamp_router::has_session(const wamp_session_id& session_id)
 {
     return m_impl->has_session(session_id);
