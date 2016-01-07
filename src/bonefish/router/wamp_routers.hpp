@@ -38,16 +38,19 @@ public:
 private:
     std::unordered_map<std::string, std::shared_ptr<wamp_router>> m_routers;
     boost::asio::io_service* m_io_service;
+    bool m_dynamic;
 };
 
 inline wamp_routers::wamp_routers()
     : m_routers()
+    , m_dynamic(False)
 {
 }
 
 inline wamp_routers::wamp_routers(boost::asio::io_service& io_service)
     : m_routers()
-    , m_io_service(&io_service)  
+    , m_io_service(&io_service)
+    , m_dynamic(True)
 {
 }
 
@@ -64,11 +67,14 @@ inline bool wamp_routers::add_router(const std::shared_ptr<wamp_router>& router)
 inline std::shared_ptr<wamp_router> wamp_routers::get_router(const std::string& realm)
 {
     auto itr = m_routers.find(realm);
-    auto ref_itr = m_routers.cbegin();
     if(itr == m_routers.end()) {
-      std::shared_ptr<wamp_router> router = std::make_shared<wamp_router>(*m_io_service, realm);
-      add_router(router);
-      return router;
+      if(m_dynamic) {
+        std::shared_ptr<wamp_router> router = std::make_shared<wamp_router>(*m_io_service, realm);
+        add_router(router);
+        return router;
+      } else {
+        return nullptr;
+      }
     } else {
       return itr->second;
     }
